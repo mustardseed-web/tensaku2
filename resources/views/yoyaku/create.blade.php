@@ -1,31 +1,41 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="mx-4 sm:p-8">
-    <form enctype="multipart/form-data">
-      <div class="md:flex items-center mt-8">
-        <div class="w-full flex flex-col">
-          <label for="title" class="font-semibold leading-none mt-4">件名</label>
-          <input type="text" name="title" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md"
-            id="title" placeholder="Enter Title">
-        </div>
-      </div>
+<!DOCTYPE html>
+<html lang="ja">
 
-      <div class="w-full flex flex-col">
-        <label for="body" class="font-semibold leading-none mt-4">本文</label>
-        <textarea name="body" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" id="body"
-          cols="30" rows="10"></textarea>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <title>Document</title>
+</head>
 
-      <div class="w-full flex flex-col">
-        <label for="image" class="font-semibold leading-none mt-4">画像 </label>
-        <div>
-          <input id="image" type="file" name="image">
-        </div>
-      </div>
 
-      <button class="mt-4">
-        送信する
-      </button>
 
-    </form>
-  </div>
-</div>
+<body>
+  <h1>予約の新規作成</h1>
+  @if (count($errors) > 0)
+  <ul>
+    @foreach ($errors->all() as $error)
+    <li>{{$error}}</li>
+    @endforeach
+  </ul>
+  @endif
+  @if(session('message'))
+  {{session('message')}}
+  @endif
+
+  <form action="{{route('store')}}" method="post">
+    @csrf
+    <h2>予約日第一希望日</h2>
+    <input type="date" name="date1" value="{{ old('date1') }}">
+    <h2>予約日第二希望日</h2>
+    <input type="date" name="date2" value="{{ old('date2') }}">
+    <h2>備考</h2>
+    <textarea name="body" rows="4" cols="40" value="{{ old('body') }}"></textarea>
+    <br>
+    <button class="bg-teal-700">送信する</button>
+  </form>
+
+</body>
+
+</html>
